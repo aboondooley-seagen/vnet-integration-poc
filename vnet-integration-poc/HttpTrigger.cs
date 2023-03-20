@@ -15,7 +15,7 @@ namespace vnet_integration_poc
     {
         [FunctionName("HttpTrigger")]
         [ServiceBusOutput("queue", Connection = "SERVICEBUS_CONNECTION")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req, ILogger log)
+        public static async Task<string> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req, ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
@@ -28,8 +28,9 @@ namespace vnet_integration_poc
             string responseMessage = string.IsNullOrEmpty(name)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
                 : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            log.LogInformation(responseMessage);
 
-            return new OkObjectResult(name);
+            return name;
         }
     }
 }
