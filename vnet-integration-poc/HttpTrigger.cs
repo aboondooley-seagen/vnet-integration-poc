@@ -13,8 +13,8 @@ namespace vnet_integration_poc
 {
     public static class HttpTrigger
     {
-        [ServiceBusOutput("queue", Connection = "SERVICEBUS_CONNECTION")]
         [FunctionName("HttpTrigger")]
+        [ServiceBusOutput("queue", Connection = "SERVICEBUS_CONNECTION")]
         public static async Task<string> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req, ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
