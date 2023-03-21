@@ -1,20 +1,17 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Microsoft.Azure.Functions.Worker;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace vnet_integration_poc
 {
     public static class HttpTrigger
     {
         [FunctionName("HttpTrigger")]
-        [ServiceBusOutput("queue", Connection = "SERVICEBUS_CONNECTION")]
+        [return: ServiceBus("queue", Connection = "SERVICEBUS_CONNECTION")]
         public static async Task<string> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req, ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
